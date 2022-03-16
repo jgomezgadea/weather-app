@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import CityList from "./CityList"
 
 const cities = [
@@ -16,4 +16,16 @@ test("CityList renders", async() => {
     const items = await screen.findAllByRole("listitem")
 
     expect(items).toHaveLength(4)
+})
+
+test("CityList click on item", async() => {
+    const fnClickOnItem = jest.fn()
+
+    render(<CityList cities={cities} onClickCity={fnClickOnItem} />)
+
+    const items = await screen.findAllByRole("listitem")
+
+    fireEvent.click(items[0])
+    
+    expect(fnClickOnItem).toHaveBeenCalledTimes(1)
 })

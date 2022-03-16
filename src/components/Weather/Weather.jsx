@@ -32,7 +32,7 @@ const Weather = ({ temperature, state }) => {
 
 Weather.propTypes = {
     temperature: PropTypes.number.isRequired,
-    state: PropTypes.string.isRequired
+    state: PropTypes.oneOf(Object.keys(stateByName)).isRequired
 }
 
 export default Weather

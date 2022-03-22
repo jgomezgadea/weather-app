@@ -3,15 +3,15 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import CityList from "./CityList"
 
 const cities = [
-    {city: "Valencia", country: "España"},
-    {city: "Pisa", country: "Italia"},
-    {city: "Londres", country: "Reino Unido"},
-    {city: "Dublín", country: "Irlanda"}
+    {city: "Valencia", country: "España", countryCode: "ES"},
+    {city: "Pisa", country: "Italia", countryCode: "IT"},
+    {city: "Londres", country: "Reino Unido", countryCode: "GB"},
+    {city: "Dublín", country: "Irlanda", countryCode: "IE"}
 ]
 
 test("CityList renders", async() => {
 
-    render(<CityList cities={cities} />)
+    render(<CityList cities={cities} onClickCity={() => {}} />)
 
     const items = await screen.findAllByRole("button")
 

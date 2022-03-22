@@ -5,10 +5,10 @@ import AppFrame from '../components/AppFrame'
 import CityList from '../components/CityList'
 
 const cities = [
-    {city: "Valencia", country: "España"},
-    {city: "Pisa", country: "Italia"},
-    {city: "Londres", country: "Reino Unido"},
-    {city: "Dublín", country: "Irlanda"}
+    {city: "Valencia", country: "España", countryCode: "ES"},
+    {city: "Pisa", country: "Italia", countryCode: "IT"},
+    {city: "Londres", country: "Reino Unido", countryCode: "GB"},
+    {city: "Dublín", country: "Irlanda", countryCode: "IE"}
 ]
 
 const MainPage = () => {

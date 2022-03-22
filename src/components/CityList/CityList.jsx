@@ -1,35 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid } from '@material-ui/core'
+import { Grid, List, ListItem } from '@material-ui/core'
 import CityInfo from '../CityInfo'
 import Weather from '../Weather'
 
 const renderCityAndCountry = eventOnClickCity => cityAndCountry => {
     const { city, country } = cityAndCountry
-    // li: HTML item
+    // li: HTML item -> set to ListItem
     return (
-        <li key={city} onClick={eventOnClickCity}>
-            <Grid container justify='center' alignItems='center'>
-                <Grid item xs={12} md={8}>
+        <ListItem button key={city} onClick={eventOnClickCity}>
+            <Grid container justifyContent='center' alignItems='center'>
+                <Grid item xs={12} md={9}>
                     <CityInfo city={city} country={country} />
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                     <Weather temperature={10} state="sunny" />
                 </Grid>
             </Grid>
-        </li>
+        </ListItem>
     )
 }
 
 const CityList = ({ cities, onClickCity }) => {
-  // ul: HTML tag to create unordered lists
+  // ul: HTML tag to create unordered lists -> set to List
   return (
-    <ul>
+    <List>
         {
             // Currying
             cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry))
         }
-    </ul>
+    </List>
   )
 }
 

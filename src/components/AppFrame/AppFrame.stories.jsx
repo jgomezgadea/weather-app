@@ -10,7 +10,7 @@ export default {
 export const AppFrameExample = () => (
     <Router>
         <AppFrame>
-            Test
+            Text
         </AppFrame>
     </Router>
 )

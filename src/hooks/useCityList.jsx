@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import convertUnits from 'convert-units'
-import { validValues } from '../components/IconState'
-import { getCityCode } from '../utils/utils'
+import { getWeatherUrl } from '../utils/urls'
+import getAllWeather from '../utils/transform/getAllWeather'
 
 const useCityList = (cities) => {
     const [allWeather, setAllWeather] = useState({})
@@ -10,24 +9,14 @@ const useCityList = (cities) => {
 
     useEffect(() => {
         const setWeather = async (city, countryCode) => {
-            const appid = "dc1cb0c3c122c1544b398de241d69f13"
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${appid}`
+
+            const url = getWeatherUrl({city, countryCode})
             
             // Define promise (completion or failure of an asynchronous operation)
-            
             try {
-                const response = await axios.get(url) 
-            
-                const { data } = response
-                const temperature = Number(convertUnits(data.main.temp).from("K").to("C").toFixed(0))
-                const stateFromServer = data.weather[0].main.toLowerCase()
-
-                const state = validValues.includes(stateFromServer) ? stateFromServer : null
-
-                const propName = getCityCode(city, countryCode)
-                const propValue = { temperature, state }
-
-                setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue }))
+                const response = await axios.get(url)
+                const allWeatherAux = getAllWeather(response, city, countryCode)
+                setAllWeather(allWeather => ({ ...allWeather, ...allWeatherAux}))
             } catch (error) {
                 if (error.response) {
                     setError("Error with the weather server")

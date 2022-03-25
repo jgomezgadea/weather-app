@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useDebugValue } from 'react'
 import axios from 'axios'
 import 'moment/locale/es'
 import { useParams } from 'react-router-dom'
@@ -12,6 +12,8 @@ const useCityPage = () => {
 
     // Get params from url using react-router
     const { city, countryCode } = useParams()
+
+    useDebugValue(`useCityPage ${city}`)
 
     useEffect(() => {
         const getForecast = async () => {
@@ -39,7 +41,7 @@ const useCityPage = () => {
 
     }, [city, countryCode])
 
-    return { city, chartData, forecastItemList }
+    return { city, countryCode, chartData, forecastItemList }
 }
 
 export default useCityPage

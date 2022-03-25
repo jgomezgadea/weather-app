@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Grid from '@material-ui/core/Grid'
+import { LinearProgress } from '@material-ui/core'
 import 'moment/locale/es'
 import useCityPage from '../hooks/useCityPage'
 import AppFrame from '../components/AppFrame'
@@ -8,18 +9,26 @@ import Weather from "../components/Weather"
 import WeatherDetails from "../components/WeatherDetails"
 import ForecastChart from "../components/ForecastChart"
 import Forecast from "../components/Forecast"
+import useCityList from '../hooks/useCityList'
+import { getCityCode } from '../utils/utils'
+import { getCountryNameByCountryCode } from '../utils/serviceCities'
 
-const CityPage = () => {
+const CityPage = ({ allWeather, onSetAllWeather }) => {
     
-    const { city, chartData, forecastItemList } = useCityPage()
+    const { city, countryCode, chartData, forecastItemList } = useCityPage()
 
-    const country = "España"
-    const state = "clouds"
-    const temperature = 20
-    const humidity = 80
-    const wind = 5
-    //const data = dataExample
-    //const forecastItemList = forecastItemListExample
+    const cities = useMemo(() => ([{city, countryCode}]), [city, countryCode])
+
+    useCityList(cities, allWeather, onSetAllWeather )
+
+    const weather = allWeather[getCityCode(city, countryCode)]
+
+    const country = countryCode && getCountryNameByCountryCode(countryCode)
+    const state = weather && weather.state
+    const temperature = weather && weather.temperature
+    const humidity = weather && weather.humidity
+    const wind = weather && weather.wind
+
     return (
         <AppFrame>
             <Grid container justifyContent="space-around" direction="column" spacing={2}>
@@ -28,7 +37,15 @@ const CityPage = () => {
                 </Grid>
                 <Grid container item xs={12} justifyContent="center">
                     <Weather state={state} temperature={temperature} />
-                    <WeatherDetails humidity={humidity} wind={wind} />
+                    {
+                        humidity && wind &&
+                        <WeatherDetails humidity={humidity} wind={wind} />
+                    }
+                </Grid>
+                <Grid item>
+                    {
+                        !chartData && !forecastItemList && <LinearProgress />
+                    }
                 </Grid>
                 <Grid item>
                     {

@@ -3,15 +3,9 @@ import { useHistory } from 'react-router-dom'
 import { Paper } from '@material-ui/core'
 import AppFrame from '../components/AppFrame'
 import CityList from '../components/CityList'
+import { getCities } from '../utils/serviceCities'
 
-const cities = [
-    {city: "Valencia", country: "España", countryCode: "ES"},
-    {city: "Pisa", country: "Italia", countryCode: "IT"},
-    {city: "Londres", country: "Reino Unido", countryCode: "GB"},
-    {city: "Dublín", country: "Irlanda", countryCode: "IE"}
-]
-
-const MainPage = () => {
+const MainPage = ({ allWeather, onSetAllWeather }) => {
     const history = useHistory()
 
     const onClickHandler = (city, countryCode) => {
@@ -21,7 +15,9 @@ const MainPage = () => {
     return (
         <AppFrame>
             <Paper elevation={3}>
-                <CityList cities={cities} onClickCity={onClickHandler} />
+                <CityList allWeather={allWeather} onSetAllWeather={onSetAllWeather}
+                    cities={getCities()} onClickCity={onClickHandler}
+                />
             </Paper>
         </AppFrame>
     )

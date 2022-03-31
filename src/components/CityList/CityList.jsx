@@ -29,9 +29,8 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 
 const CityList = ({ cities, onClickCity, data, actions }) => {
     const { allWeather } = data
-    const { onSetAllWeather } = actions
 
-    const { error, setError } = useCityList(cities, allWeather, onSetAllWeather)
+    const { error, setError } = useCityList(cities, allWeather, actions)
 
     // ul: HTML tag to create unordered lists -> set to List
     return (

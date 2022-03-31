@@ -4,7 +4,7 @@ import { getWeatherUrl } from '../utils/urls'
 import getAllWeather from '../utils/transform/getAllWeather'
 import { getCityCode } from '../utils/utils'
 
-const useCityList = (cities, allWeather, onSetAllWeather) => {
+const useCityList = (cities, allWeather, actions) => {
     // const [allWeather, setAllWeather] = useState({})
     const [error, setError] = useState(null)
 
@@ -16,12 +16,14 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
             // Define promise (completion or failure of an asynchronous operation)
             try {
                 const propName = getCityCode(city, countryCode)
-                onSetAllWeather({ [propName]: {} })
+
+                actions({ type: 'SET_ALL_WEATHER', payload: { [propName]: {} }})
     
                 const response = await axios.get(url)
 
                 const allWeatherAux = getAllWeather(response, city, countryCode)
-                onSetAllWeather(allWeatherAux)
+
+                actions({ type: 'SET_ALL_WEATHER', payload: allWeatherAux})
             } catch (error) {
                 if (error.response) {
                     setError("Error with the weather server")
@@ -40,7 +42,7 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
             }
         })
 
-    }, [cities, allWeather, onSetAllWeather])
+    }, [cities, allWeather, actions])
 
     return { error, setError }
 }

@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { IconContext } from 'react-icons'
 import { Grid, AppBar, Toolbar, IconButton, Link, Typography } from '@material-ui/core'
 import { Link as LinkRouter } from 'react-router-dom'
 import { WiDaySunny } from 'react-icons/wi'
 
 const AppFrame = ({ children }) => {
+    const iconContextSize = useMemo(() => ({size:'2em'}), [])
     return (
         <Grid container justifyContent='center'>
             <AppBar position='static' >
                 <Toolbar variant="dense">
                 <IconButton color="inherit" aria-label='menu'>
                     <Link component={LinkRouter} to="/main" color='inherit' arial-label="menu">
-                    <IconContext.Provider value={{size:'2em'}}>
+                    <IconContext.Provider value={iconContextSize}>
                         <WiDaySunny />
                     </IconContext.Provider>
                     </Link>

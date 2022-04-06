@@ -6,6 +6,7 @@ import useCityList from '../../hooks/useCityList'
 import CityInfo from '../CityInfo'
 import Weather from '../Weather'
 import { getCityCode } from '../../utils/utils'
+import { useWeatherDispatchContext, useWeatherStateContext } from '../../WeatherContext'
 
 const CityListItem = React.memo(({ city, countryCode, country, weather, eventOnClickCity }) => {
 // li: HTML item -> set to ListItem
@@ -34,9 +35,11 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
         {...cityAndCountry} />
 }
 
-const CityList = ({ cities, onClickCity, data, actions }) => {
-    const { allWeather } = data
+const CityList = ({ cities, onClickCity }) => {
+    const actions = useWeatherDispatchContext()
+    const data = useWeatherStateContext()
 
+    const { allWeather } = data
     const { error, setError } = useCityList(cities, allWeather, actions)
 
     // ul: HTML tag to create unordered lists -> set to List
